@@ -6,16 +6,17 @@ VOLUME /opt/app-root/wp-content
 
 # Install wordpress and backup the base image S2I scripts
 USER root
-RUN cd /tmp && curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
-    && mkdir -p /opt/app-root/wordpress \
-    && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
-    && tar -xzf wordpress.tar.gz --strip-components=1 -C /opt/app-root/wordpress \
-    && rm wordpress.tar.gz \
-    && mv /opt/app-root/wordpress/wp-content /opt/app-root/wordpress/wp-content-install \
-    && mv $STI_SCRIPTS_PATH/run $STI_SCRIPTS_PATH/run-base \
-    && mv $STI_SCRIPTS_PATH/assemble $STI_SCRIPTS_PATH/assemble-base \
-    && fix-permissions /opt/app-root/wordpress \
-    && fix-permissions /opt/app-root/wp-content && chmod -R 0777 /opt/app-root/wp-content
+RUN cd /tmp
+RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz
+RUN mkdir -p /opt/app-root/wordpress
+RUN echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -
+RUN tar -xzf wordpress.tar.gz --strip-components=1 -C /opt/app-root/wordpress
+RUN rm wordpress.tar.gz
+RUN mv /opt/app-root/wordpress/wp-content /opt/app-root/wordpress/wp-content-install
+RUN mv $STI_SCRIPTS_PATH/run $STI_SCRIPTS_PATH/run-base
+RUN mv $STI_SCRIPTS_PATH/assemble $STI_SCRIPTS_PATH/assemble-base
+RUN fix-permissions /opt/app-root/wordpress
+RUN fix-permissions /opt/app-root/wp-content && chmod -R 0777 /opt/app-root/wp-content
 
 
 # Copied from the official Wordpress Docker image
