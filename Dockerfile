@@ -15,8 +15,9 @@ RUN rm wordpress.tar.gz
 RUN mv /opt/app-root/wordpress/wp-content /opt/app-root/wordpress/wp-content-install
 RUN mv $STI_SCRIPTS_PATH/run $STI_SCRIPTS_PATH/run-base
 RUN mv $STI_SCRIPTS_PATH/assemble $STI_SCRIPTS_PATH/assemble-base
-RUN fix-permissions /opt/app-root/wordpress
-RUN fix-permissions /opt/app-root/wp-content && chmod -R 0777 /opt/app-root/wp-content
+#RUN fix-permissions /opt/app-root/wordpress
+#RUN fix-permissions /opt/app-root/wp-content
+#RUN chmod -R 0777 /opt/app-root/wp-content
 
 
 # Copied from the official Wordpress Docker image
